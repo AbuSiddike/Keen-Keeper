@@ -1,0 +1,98 @@
+[
+  {
+    "id": 1,
+    "name": "Emma Wilson",
+    "picture": "https://randomuser.me/api/portraits/women/44.jpg",
+    "email": "emma.wilson@example.com",
+    "days_since_contact": 62,
+    "status": "overdue",
+    "tags": ["family", "mentor"],
+    "bio": "Former colleague and great mentor. We used to meet for coffee every month to discuss career growth.",
+    "goal": 30,
+    "next_due_date": "2026-05-10"
+  },
+  {
+    "id": 2,
+    "name": "David Kim",
+    "picture": "https://randomuser.me/api/portraits/men/32.jpg",
+    "email": "david.kim@example.com",
+    "days_since_contact": 12,
+    "status": "almost due",
+    "tags": ["college", "close friend"],
+    "bio": "Met during university days. We share a passion for hiking and tech startups.",
+    "goal": 14,
+    "next_due_date": "2026-04-25"
+  },
+  {
+    "id": 3,
+    "name": "Lisa Nakamura",
+    "picture": "https://randomuser.me/api/portraits/women/65.jpg",
+    "email": "lisa.nakamura@example.com",
+    "days_since_contact": 5,
+    "status": "on-track",
+    "tags": ["work", "colleague"],
+    "bio": "Current project partner at the office. Always brings great ideas to the table.",
+    "goal": 21,
+    "next_due_date": "2026-04-28"
+  },
+  {
+    "id": 4,
+    "name": "James Wright",
+    "picture": "https://randomuser.me/api/portraits/men/45.jpg",
+    "email": "james.wright@example.com",
+    "days_since_contact": 45,
+    "status": "overdue",
+    "tags": ["gym", "friend"],
+    "bio": "Workout buddy from the local gym. We motivate each other to stay consistent.",
+    "goal": 30,
+    "next_due_date": "2026-04-20"
+  },
+  {
+    "id": 5,
+    "name": "Aisha Patel",
+    "picture": "https://randomuser.me/api/portraits/women/22.jpg",
+    "email": "aisha.patel@example.com",
+    "days_since_contact": 8,
+    "status": "on-track",
+    "tags": ["school", "best friend"],
+    "bio": "Childhood best friend. We grew up in the same neighborhood and still share everything.",
+    "goal": 15,
+    "next_due_date": "2026-04-22"
+  },
+  {
+    "id": 6,
+    "name": "Marcus Johnson",
+    "picture": "https://randomuser.me/api/portraits/men/67.jpg",
+    "email": "marcus.johnson@example.com",
+    "days_since_contact": 18,
+    "status": "almost due",
+    "tags": ["work", "mentor"],
+    "bio": "Senior colleague who guided me in my first job. Always gives honest career advice.",
+    "goal": 21,
+    "next_due_date": "2026-04-26"
+  },
+  {
+    "id": 7,
+    "name": "Olivia Martinez",
+    "picture": "https://randomuser.me/api/portraits/women/33.jpg",
+    "email": "olivia.martinez@example.com",
+    "days_since_contact": 3,
+    "status": "on-track",
+    "tags": ["family"],
+    "bio": "Cousin who feels more like a sister. We talk about life, travel, and family matters.",
+    "goal": 10,
+    "next_due_date": "2026-04-23"
+  },
+  {
+    "id": 8,
+    "name": "Ryan O'Brien",
+    "picture": "https://randomuser.me/api/portraits/men/86.jpg",
+    "email": "ryan.obrien@example.com",
+    "days_since_contact": 35,
+    "status": "overdue",
+    "tags": ["hobby", "friend"],
+    "bio": "Photography club friend. We used to go on weekend shoots together.",
+    "goal": 25,
+    "next_due_date": "2026-04-30"
+  }
+]
