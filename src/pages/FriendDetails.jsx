@@ -22,7 +22,7 @@ const FriendDetails = () => {
   const [timeline, setTimeline] = useState([]);
 
   useEffect(() => {
-    fetch('/src/data/friends.json')
+    fetch('/data/friends.json')
       .then((res) => res.json())
       .then((data) => {
         const found = data.find((f) => f.id === parseInt(id));

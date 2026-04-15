@@ -2,11 +2,10 @@
 
 KeenKeeper is a thoughtfully designed web application that helps you nurture meaningful relationships by keeping track of your interactions. It ensures you never lose touch with the people who matter most.
 
-![KeenKeeper Dashboard](https://via.placeholder.com/800x400/166534/ffffff?text=KeenKeeper+Dashboard)
 
 ## Live Demo
 
-**[Live Link](https://vercel-link-here.vercel.app)**  
+**[Live Link](https://keen-keeper-chi.vercel.app/)**  
 
 ## Project Overview
 
