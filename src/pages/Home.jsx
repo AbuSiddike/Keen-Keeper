@@ -74,7 +74,7 @@ const Home = () => {
         </div>
 
         <div className="card p-6 text-center">
-          <div className="text-4xl font-semibold text-amber-600 mb-1">
+          <div className="text-4xl font-semibold text-red-600 mb-1">
             {needAttention}
           </div>
           <div className="text-sm text-gray-500">Need Attention</div>
