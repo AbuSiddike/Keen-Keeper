@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
+import useTimelineStore from '../store/timelineStore';
 import {
   PhoneIcon,
   ChatBubbleLeftIcon,
@@ -35,24 +36,29 @@ const FriendDetails = () => {
       .catch(() => setLoading(false));
   }, [id, navigate]);
 
+  const addEntry = useTimelineStore((state) => state.addEntry);
+
   const handleQuickCheckIn = (type) => {
     const actionTitle = `${type} with ${friend.name}`;
 
-    // Add to timeline
     const newEntry = {
       id: Date.now(),
       type: type.toLowerCase(),
       title: actionTitle,
-      date: new Date().toISOString().split('T')[0],
+      date: new Date().toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      }),
       friendId: parseInt(id),
+      friendName: friend.name,
     };
 
-    setTimeline((prev) => [newEntry, ...prev]);
+    addEntry(newEntry);
 
-    // Show toast
-    toast.success(`${type} logged successfully!`, {
+    toast.success(`${type} with ${friend.name} logged!`, {
       icon: type === 'Call' ? '📞' : type === 'Text' ? '💬' : '🎥',
-      duration: 2000,
+      duration: 2500,
     });
   };
 
@@ -131,10 +137,10 @@ const FriendDetails = () => {
             {/* Action Buttons */}
             <div className="mt-10 space-y-3">
               <button className="w-full flex items-center justify-center gap-3 border border-gray-300 hover:bg-gray-50 py-3.5 rounded-2xl font-medium transition-colors">
-                <ClockIcon className="w-5 h-5"/> Snooze 2 Weeks
+                <ClockIcon className="w-5 h-5" /> Snooze 2 Weeks
               </button>
               <button className="w-full flex items-center justify-center gap-3 border border-gray-300 hover:bg-gray-50 py-3.5 rounded-2xl font-medium transition-colors">
-                <ArchiveBoxIcon className="w-5 h-5"/> Archive
+                <ArchiveBoxIcon className="w-5 h-5" /> Archive
               </button>
               <button
                 onClick={() => {
@@ -145,7 +151,7 @@ const FriendDetails = () => {
                 }}
                 className="w-full flex items-center justify-center gap-3 text-red-600 hover:bg-red-50 py-3.5 rounded-2xl font-medium transition-colors"
               >
-                <TrashIcon className="w-5 h-5"/> Delete
+                <TrashIcon className="w-5 h-5" /> Delete
               </button>
             </div>
           </div>
