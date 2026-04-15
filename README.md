@@ -1,16 +1,53 @@
-# React + Vite
+# KeenKeeper — Keep Your Friendships Alive
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+KeenKeeper is a thoughtfully designed web application that helps you nurture meaningful relationships by keeping track of your interactions. It ensures you never lose touch with the people who matter most.
 
-Currently, two official plugins are available:
+![KeenKeeper Dashboard](https://via.placeholder.com/800x400/166534/ffffff?text=KeenKeeper+Dashboard)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Live Demo
 
-## React Compiler
+**[Live Link](https://vercel-link-here.vercel.app)**  
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Project Overview
 
-## Expanding the ESLint configuration
+KeenKeeper helps users nurture their important relationships by visualizing friend status, tracking interactions (Call, Text, Video), and providing friendship analytics.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Features
+
+### Core Features
+
+-  Fully responsive design (Mobile, Tablet, Desktop)
+-  Beautiful Navbar with active states and mobile hamburger menu
+-  Interactive Home Dashboard with summary cards
+-  Dynamic Friends Grid with realistic data
+-  Detailed Friend Profile Page with Quick Check-In
+-  Global Timeline with filter functionality
+-  Friendship Analytics with interactive Pie Chart (Recharts)
+-  Toast notifications for user actions
+-  404 Error Page
+
+### Technical Features
+
+- Real-time interaction logging (Call, Text, Video)
+- Persistent timeline using Zustand + localStorage
+- Status-based color coding (Overdue, Almost Due, On Track)
+- Smooth navigation with React Router
+
+## 🛠️ Technologies Used
+
+- **React.js** + **Vite**
+- **Tailwind CSS**
+- **React Router DOM**
+- **Recharts** (for Analytics Pie Chart)
+- **Heroicons**
+- **Zustand** (State Management)
+- **react-hot-toast** (Notifications)
+
+## Key Highlights
+
+- **8 Realistic Friend Profiles** with meaningful bios and varied statuses
+- **Responsive Friend Cards** (4-column grid on large screens)
+- **Two-column Friend Details** layout matching Figma design
+- **Interactive Pie Chart** showing Call/Text/Video distribution
+- **Timeline Filter** by interaction type
+- **Loading States** and smooth UX
