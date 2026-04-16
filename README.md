@@ -32,7 +32,7 @@ KeenKeeper helps users nurture their important relationships by visualizing frie
 - Status-based color coding (Overdue, Almost Due, On Track)
 - Smooth navigation with React Router
 
-## 🛠️ Technologies Used
+## Technologies Used
 
 - **React.js** + **Vite**
 - **Tailwind CSS**

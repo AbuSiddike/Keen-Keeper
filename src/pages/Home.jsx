@@ -30,10 +30,20 @@ const Home = () => {
 
   if (loading) {
     return (
-      <div className="min-h-[60vh] flex items-center justify-center">
-        <div className="flex flex-col items-center">
-          <div className="w-12 h-12 border-4 border-emerald-200 border-t-emerald-600 rounded-full animate-spin"></div>
-          <p className="mt-4 text-gray-500">Loading your friends...</p>
+      <div className="min-h-[70vh] flex items-center justify-center bg-gray-50">
+        <div className="text-center">
+          {/* Spinner */}
+          <div className="relative mx-auto w-20 h-20">
+            <div className="absolute inset-0 border-4 border-emerald-200 rounded-full"></div>
+            <div className="absolute inset-0 border-4 border-emerald-600 border-t-transparent rounded-full animate-spin"></div>
+          </div>
+
+          <h3 className="mt-8 text-xl font-semibold text-gray-800">
+            Loading your friends...
+          </h3>
+          <p className="mt-3 text-gray-500 max-w-xs mx-auto">
+            Preparing your personal connection dashboard
+          </p>
         </div>
       </div>
     );
@@ -51,7 +61,7 @@ const Home = () => {
           nurture the relationships that matter most.
         </p>
 
-        <button className="mt-8 bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-3.5 rounded-2xl font-medium flex items-center gap-3 mx-auto transition-all active:scale-95">
+        <button className="mt-8 bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-3.5 rounded-2xl font-medium flex items-center gap-3 mx-auto transition-all active:scale-95 shadow-sm">
           <UserPlusIcon className="w-5 h-5" />
           Add a Friend
         </button>

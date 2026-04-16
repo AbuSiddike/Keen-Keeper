@@ -6,8 +6,6 @@ import {
   PhoneIcon,
   ChatBubbleLeftIcon,
   VideoCameraIcon,
-} from '@heroicons/react/24/outline';
-import {
   ClockIcon,
   TrashIcon,
   ArchiveBoxIcon,
@@ -19,32 +17,39 @@ const FriendDetails = () => {
   const navigate = useNavigate();
   const [friend, setFriend] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [timeline, setTimeline] = useState([]);
+
+  const timeline = useTimelineStore((state) => state.timeline);
+  const addEntry = useTimelineStore((state) => state.addEntry);
+
+  const friendInteractions = timeline
+    .filter((entry) => entry.friendId === parseInt(id))
+    .slice(0, 5);
 
   useEffect(() => {
     fetch('/data/friends.json')
       .then((res) => res.json())
       .then((data) => {
-        const found = data.find((f) => f.id === parseInt(id));
-        if (found) {
-          setFriend(found);
+        const foundFriend = data.find((f) => f.id === parseInt(id));
+        if (foundFriend) {
+          setFriend(foundFriend);
         } else {
           navigate('/404');
         }
         setLoading(false);
       })
-      .catch(() => setLoading(false));
+      .catch((err) => {
+        console.error(err);
+        setLoading(false);
+      });
   }, [id, navigate]);
 
-  const addEntry = useTimelineStore((state) => state.addEntry);
-
   const handleQuickCheckIn = (type) => {
-    const actionTitle = `${type} with ${friend.name}`;
+    if (!friend) return;
 
     const newEntry = {
       id: Date.now(),
       type: type.toLowerCase(),
-      title: actionTitle,
+      title: `${type} with ${friend.name}`,
       date: new Date().toLocaleDateString('en-US', {
         year: 'numeric',
         month: 'long',
@@ -58,15 +63,14 @@ const FriendDetails = () => {
 
     toast.success(`${type} with ${friend.name} logged!`, {
       icon: type === 'Call' ? '📞' : type === 'Text' ? '💬' : '🎥',
-      duration: 2500,
     });
   };
 
   if (loading) {
     return (
       <div className="min-h-[70vh] flex items-center justify-center">
-        <div className="flex flex-col items-center">
-          <div className="w-12 h-12 border-4 border-emerald-200 border-t-emerald-600 rounded-full animate-spin"></div>
+        <div className="text-center">
+          <div className="w-12 h-12 border-4 border-emerald-200 border-t-emerald-600 rounded-full animate-spin mx-auto"></div>
           <p className="mt-4 text-gray-500">Loading friend details...</p>
         </div>
       </div>
@@ -75,16 +79,30 @@ const FriendDetails = () => {
 
   if (!friend) return null;
 
-  const statusColor = {
-    overdue: 'bg-red-100 text-red-700',
-    'almost due': 'bg-yellow-100 text-yellow-700',
-    'on-track': 'bg-green-100 text-green-700',
+  const getStatusBadge = (status) => {
+    switch (status) {
+      case 'overdue':
+        return 'bg-red-500 text-white';
+      case 'almost due':
+        return 'bg-amber-500 text-white';
+      case 'on-track':
+        return 'bg-emerald-700 text-white';
+      default:
+        return 'bg-gray-500 text-white';
+    }
   };
 
-  const statusText = {
-    overdue: 'Overdue',
-    'almost due': 'Almost Due',
-    'on-track': 'On Track',
+  const getStatusText = (status) => {
+    switch (status) {
+      case 'overdue':
+        return 'Overdue';
+      case 'almost due':
+        return 'Almost Due';
+      case 'on-track':
+        return 'On-Track';
+      default:
+        return status;
+    }
   };
 
   return (
@@ -99,23 +117,22 @@ const FriendDetails = () => {
                 alt={friend.name}
                 className="w-32 h-32 rounded-3xl object-cover shadow-lg mb-6"
               />
-              <h1 className="text-3xl font-semibold text-gray-900 mb-2">
+              <h1 className="text-3xl font-semibold text-gray-900 mb-3">
                 {friend.name}
               </h1>
 
               <span
-                className={`px-6 py-2 text-sm font-medium rounded-2xl ${statusColor[friend.status]}`}
+                className={`px-7 py-2 text-sm font-semibold rounded-3xl ${getStatusBadge(friend.status)}`}
               >
-                {statusText[friend.status]}
+                {getStatusText(friend.status)}
               </span>
             </div>
 
-            {/* Tags */}
             <div className="flex flex-wrap gap-2 justify-center mb-8">
-              {friend.tags.map((tag, i) => (
+              {friend.tags.map((tag, index) => (
                 <span
-                  key={i}
-                  className="px-4 py-1 bg-gray-100 text-gray-600 text-sm rounded-full"
+                  key={index}
+                  className="px-4 py-1.5 bg-emerald-100 text-emerald-700 text-sm font-medium rounded-2xl"
                 >
                   {tag}
                 </span>
@@ -127,7 +144,6 @@ const FriendDetails = () => {
                 <p className="text-gray-500 mb-1">Bio</p>
                 <p className="text-gray-700 leading-relaxed">{friend.bio}</p>
               </div>
-
               <div>
                 <p className="text-gray-500 mb-1">Email</p>
                 <p className="font-medium text-gray-800">{friend.email}</p>
@@ -162,19 +178,19 @@ const FriendDetails = () => {
           {/* Stats Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="card p-6 text-center">
-              <div className="text-4xl font-semibold text-gray-900 mb-2">
+              <div className="text-4xl font-semibold text-gray-900">
                 {friend.days_since_contact}
               </div>
               <div className="text-sm text-gray-500">Days Since Contact</div>
             </div>
             <div className="card p-6 text-center">
-              <div className="text-4xl font-semibold text-emerald-600 mb-2">
+              <div className="text-4xl font-semibold text-emerald-600">
                 {friend.goal}
               </div>
               <div className="text-sm text-gray-500">Goal (Days)</div>
             </div>
             <div className="card p-6 text-center">
-              <div className="text-2xl font-semibold text-gray-900 mb-1">
+              <div className="text-xl font-semibold text-gray-900">
                 {friend.next_due_date}
               </div>
               <div className="text-sm text-gray-500">Next Due Date</div>
@@ -183,9 +199,9 @@ const FriendDetails = () => {
 
           {/* Relationship Goal */}
           <div className="card p-8">
-            <div className="flex justify-between items-start mb-6">
+            <div className="flex justify-between items-start">
               <div>
-                <h3 className="font-semibold text-xl mb-2">
+                <h3 className="font-semibold text-xl mb-1">
                   Relationship Goal
                 </h3>
                 <p className="text-gray-600">
@@ -195,9 +211,8 @@ const FriendDetails = () => {
                   </span>
                 </p>
               </div>
-              <button className="flex items-center gap-2 text-sm text-emerald-600 hover:text-emerald-700">
-                <PencilIcon className="w-4 h-4" />
-                Edit
+              <button className="text-emerald-600 hover:text-emerald-700 flex items-center gap-1 text-sm">
+                <PencilIcon className="w-4 h-4" /> Edit
               </button>
             </div>
           </div>
@@ -205,58 +220,55 @@ const FriendDetails = () => {
           {/* Quick Check-In */}
           <div className="card p-8">
             <h3 className="font-semibold text-xl mb-6">Quick Check-In</h3>
-
             <div className="grid grid-cols-3 gap-4">
-              <button
-                onClick={() => handleQuickCheckIn('Call')}
-                className="flex flex-col items-center gap-3 py-8 border border-gray-200 hover:border-emerald-200 hover:bg-emerald-50 rounded-3xl transition-all active:scale-95"
-              >
-                <PhoneIcon className="w-10 h-10 text-emerald-600" />
-                <span className="font-medium">Call</span>
-              </button>
-
-              <button
-                onClick={() => handleQuickCheckIn('Text')}
-                className="flex flex-col items-center gap-3 py-8 border border-gray-200 hover:border-emerald-200 hover:bg-emerald-50 rounded-3xl transition-all active:scale-95"
-              >
-                <ChatBubbleLeftIcon className="w-10 h-10 text-emerald-600" />
-                <span className="font-medium">Text</span>
-              </button>
-
-              <button
-                onClick={() => handleQuickCheckIn('Video')}
-                className="flex flex-col items-center gap-3 py-8 border border-gray-200 hover:border-emerald-200 hover:bg-emerald-50 rounded-3xl transition-all active:scale-95"
-              >
-                <VideoCameraIcon className="w-10 h-10 text-emerald-600" />
-                <span className="font-medium">Video</span>
-              </button>
+              {['Call', 'Text', 'Video'].map((type) => (
+                <button
+                  key={type}
+                  onClick={() => handleQuickCheckIn(type)}
+                  className="flex flex-col items-center gap-3 py-8 border border-gray-200 hover:border-emerald-300 hover:bg-emerald-50 rounded-3xl transition-all active:scale-95"
+                >
+                  {type === 'Call' && (
+                    <PhoneIcon className="w-10 h-10 text-emerald-600" />
+                  )}
+                  {type === 'Text' && (
+                    <ChatBubbleLeftIcon className="w-10 h-10 text-emerald-600" />
+                  )}
+                  {type === 'Video' && (
+                    <VideoCameraIcon className="w-10 h-10 text-emerald-600" />
+                  )}
+                  <span className="font-medium">{type}</span>
+                </button>
+              ))}
             </div>
           </div>
 
-          {/* Recent Interactions (local for this page) */}
+          {/* Recent Interactions */}
           <div className="card p-8">
             <div className="flex justify-between items-center mb-6">
               <h3 className="font-semibold text-xl">Recent Interactions</h3>
-              <button className="text-sm text-emerald-600 hover:underline">
+              <button
+                onClick={() => navigate('/timeline')}
+                className="text-emerald-600 hover:underline text-sm"
+              >
                 Full History →
               </button>
             </div>
 
-            {timeline.length > 0 ? (
+            {friendInteractions.length > 0 ? (
               <div className="space-y-4">
-                {timeline.slice(0, 4).map((entry) => (
+                {friendInteractions.map((entry) => (
                   <div
                     key={entry.id}
-                    className="flex items-center gap-4 py-3 border-b border-gray-100 last:border-none"
+                    className="flex gap-4 py-3 border-b last:border-none"
                   >
-                    <div className="text-2xl">
+                    <div className="text-2xl mt-0.5">
                       {entry.type === 'call'
                         ? '📞'
                         : entry.type === 'text'
                           ? '💬'
                           : '🎥'}
                     </div>
-                    <div className="flex-1">
+                    <div>
                       <p className="font-medium">{entry.title}</p>
                       <p className="text-sm text-gray-500">{entry.date}</p>
                     </div>
@@ -264,8 +276,9 @@ const FriendDetails = () => {
                 ))}
               </div>
             ) : (
-              <p className="text-gray-500 py-8 text-center">
-                No recent interactions yet. Use Quick Check-In above.
+              <p className="text-gray-500 py-12 text-center">
+                No interactions logged yet with {friend.name}.<br />
+                Use the Quick Check-In buttons above.
               </p>
             )}
           </div>
